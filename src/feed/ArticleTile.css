@@ -1,0 +1,26 @@
+.articleTile {
+    background: #dddddd;
+    padding: 10px;
+    margin: 10px;
+    display: flex;
+}
+
+.articleTile img {
+    flex: 1;
+}
+
+.articleRight {
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+}
+
+.articleTitle {
+    flex: 1
+
+}
+
+.articleChart {
+    flex: 3;
+}
