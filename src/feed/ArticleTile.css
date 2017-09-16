@@ -1,8 +1,13 @@
 .articleTile {
-    background: #dddddd;
+    box-shadow: 1px 1px 4px black;
     padding: 10px;
     margin: 10px;
     display: flex;
+    cursor: pointer;
+}
+
+.articleTile:hover {
+    background-color: #eeeeee;
 }
 
 .articleTile img {
@@ -10,7 +15,7 @@
 }
 
 .articleRight {
-    flex: 3;
+    flex: 2;
     display: flex;
     flex-direction: column;
     margin-left: 10px;
@@ -18,7 +23,6 @@
 
 .articleTitle {
     flex: 1
-
 }
 
 .articleChart {

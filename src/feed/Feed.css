@@ -1,16 +1,10 @@
 .feedContainer {
     display: flex;
     flex-direction: row;
-}
-
-#feed1 {
-    flex: 1;
-}
-
-#feed2 {
-    flex: 1;
+    width: 100%;
 }
 
 .feedView {
     list-style-type: none;
+    flex: 1;
 }

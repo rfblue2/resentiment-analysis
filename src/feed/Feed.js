@@ -20,10 +20,10 @@ class Feed extends Component {
     const femaleFilter = a => a.gender === 'f';
     return (
       <div className="feedContainer">
-        <div id="feed1">
+        <div>
           {this.FeedView(this.props.articles, maleFilter)}
         </div>
-        <div id="feed2">
+        <div>
           {this.FeedView(this.props.articles, femaleFilter)}
         </div>
       </div>
