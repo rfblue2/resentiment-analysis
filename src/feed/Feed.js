@@ -7,7 +7,7 @@ class Feed extends Component {
   FeedView(articles, filter) {
     const newsTiles = articles
       .filter(filter)
-      .map(a => <li key={a.id}><ArticleTile article={a}/></li>);
+      .map(a => <ArticleTile article={a} key={a.id} />);
     return (
       <ul className="feedView">
         {newsTiles}
@@ -20,15 +20,11 @@ class Feed extends Component {
     const femaleFilter = a => a.gender === 'f';
     return (
       <div className="feedContainer">
-        <div>
-          {this.FeedView(this.props.articles, maleFilter)}
-        </div>
-        <div>
-          {this.FeedView(this.props.articles, femaleFilter)}
-        </div>
+        {this.FeedView(this.props.articles, maleFilter)}
+        {this.FeedView(this.props.articles, femaleFilter)}
       </div>
     );
   }
 }
 
-export default Feed
+export default Feed;

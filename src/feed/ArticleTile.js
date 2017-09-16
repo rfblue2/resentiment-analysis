@@ -11,15 +11,14 @@ class ArticleTile extends Component {
 
   render() {
     return (
-      <a className="articleTile" onClick={this.articleClick}>
-        <img src={this.props.article.img} alt={this.props.article.title}/>
-        <div className="articleRight">
-          <div className="title">{this.props.article.title}</div>
-          <div className="articleChart">
-            <Chart data={this.props.article.sentiment}/>
-          </div>
+      <li className="articleTile" onClick={this.articleClick}>
+        <div className="articleTitle">{this.props.article.title}</div>
+        <div className="articleAuthor">Author Name</div>
+        <div className="articleSource">{this.props.article.source}</div>
+        <div className="articleChart">
+          <Chart data={this.props.article.sentiment}/>
         </div>
-      </a>
+      </li>
     );
   };
 }

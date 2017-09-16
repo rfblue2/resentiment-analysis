@@ -1,30 +1,33 @@
 .articleTile {
-    box-shadow: 1px 1px 4px black;
-    padding: 10px;
+    box-shadow: 1px 1px 4px rgba(0,0,0,0.3);
     margin: 10px;
-    display: flex;
     cursor: pointer;
+    position: relative;
+    padding: 10px 10px 30px 10px;
 }
 
 .articleTile:hover {
     background-color: #eeeeee;
 }
 
-.articleTile img {
-    flex: 1;
-}
-
-.articleRight {
-    flex: 2;
-    display: flex;
-    flex-direction: column;
-    margin-left: 10px;
-}
-
 .articleTitle {
-    flex: 1
+    font-size: 1.1rem;
+    font-weight: 300;
+}
+
+.articleAuthor {
+    font-size: 1.2rem;
+    font-weight: 300;
+}
+
+.articleSource {
+    font-size: 0.9rem;
+    font-weight: 300;
 }
 
 .articleChart {
-    flex: 3;
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    pointer-events: none;
 }
