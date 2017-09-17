@@ -16,20 +16,32 @@ graph_client = GraphApiClient()
 facebook_client = FacebookClient()
 mongodb = mongo_client["news-sentiment"]
 
+@app.route("/", methods = ["GET"])
+def root_handler():
+    return "Hello world!"
+
 @app.route("/search/", methods = ["GET"])
 def search_handler():
 
     if request.method == "GET":
+        fbid = request.args.get('fbid')
+        if not fbid is None:
+            postgen = facebook_client.get_posts(fbid)
+            postids = [post for post in postgen]
+            return jsonify(postids)
+
         news_url = request.args.get('query')
         entry = mongodb.entries.find_one({"url": news_url})
         if entry is None:
-            comments = twitter_client.get_tweets(news_url)
-            mongodb.entries.insert_one({
-                "url": news_url,
-                "comments": comments,
-            })
+            return "not in db!"
+            # comments = twitter_client.get_tweets(news_url)
+            # mongodb.entries.insert_one({
+            #     "url": news_url,
+            #     "comments": comments,
+            # })
         else:
-            comments = entry['comments']
+            # comments = entry['comments']
+            return "in db!"
 
         return jsonify(comments)
     else:
