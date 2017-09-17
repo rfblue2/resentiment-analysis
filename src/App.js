@@ -52,8 +52,8 @@ class App extends Component {
               <form onSubmit={this.onSubmit2.bind(this)} >
                 <input type="text" className="input" name="url" placeholder="Enter a person's name..." />
               </form>
-              <Profile person={repo.getProfile(this.state.name1)} />
-              <Feed articles={this.state.name1} />
+              <Profile person={repo.getProfile(this.state.name2)} />
+              <Feed name={this.state.name2} />
             </div>
           </div>
 

@@ -16,13 +16,15 @@ class Chart extends Component {
         width = +svg.attr("width"),
         height = +svg.attr("height");
 
+    let margin = 5;
+
     var x = d3.scaleLinear()
         .domain([0, 100])
-        .range([0, width]);
+        .range([margin, width - margin]);
 
     var y = d3.scaleLinear()
-        .domain([0, 0.1])
-        .range([height, 0]);
+        .domain([0, 0.04])
+        .range([height - margin, margin]);
 
     var density = kernelDensityEstimator(kernelEpanechnikov(5), x.ticks(40))(data);
 
@@ -54,7 +56,7 @@ class Chart extends Component {
 
   render() {
     return (
-      <svg ref={(elem) => { this.svg = elem; }} width="200" height="200" viewBox="0 0 200 200" preserveAspectRatio="none" />
+      <svg ref={(elem) => { this.svg = elem; }} width="300" height="100" viewBox="0 0 300 100" />
     );
   }
 }

@@ -1,6 +1,4 @@
 .personProfile {
-    display: flex;
-    flex-direction: column;
     box-shadow: 1px 1px 4px rgba(0,0,0,0.3);
     position: relative;
     padding: 10px;
@@ -9,22 +7,21 @@
 }
 
 .personName {
-    flex: 1;
-    text-align: center;
     font-size: 1.5rem;
     font-weight: 300;
+    margin-bottom: 30px;
 }
 
 .personImg {
-    flex: 3;
-    display: block;
-    margin: auto;
-    height: 300px;
-    width: 500px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    height: 100px;
+    width: 100px;
 }
 
-.personChart {
-    flex: 2;
+.personChart svg {
     display: block;
-    margin: auto;
+    width: 100%;
+    height: auto;
 }

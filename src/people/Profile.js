@@ -9,8 +9,8 @@ class Profile extends Component {
   render() {
     return (
       <div className="personProfile">
-        <div className="personName">{this.props.person.name}</div>
         <img className="personImg" src={this.props.person.img} alt={this.props.person.name}/>
+        <div className="personName">{this.props.person.name}</div>
         <div className="personChart">
           <Chart data={this.props.person.sentiment} ref={(e) => { this.personChart = e; }} />
         </div>

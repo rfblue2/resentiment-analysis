@@ -48,21 +48,18 @@
     position: absolute;
     right: 0;
     bottom: 0;
-    height: 200px;
-    width: 200px;
     pointer-events: none;
 }
 
 .articleChart svg {
-    height: 200px;
     width: 200px;
+    height: auto;
 }
 
-.articleTile_modal .articleChart,
 .articleTile_modal .articleChart svg {
     transition: height 0.5s, width 0.5s;
-    height: 580px;
     width: 580px;
+    height: auto;
 }
 
 .articleTop {
