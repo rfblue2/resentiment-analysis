@@ -24,7 +24,9 @@ class Profile extends Component {
                       <Chart data={this.props.person.sentiment} ref={(e) => { this.personChart = e; }} />
                     </div>
                   </div>
-                : this.props.notFound ? <div className="personError">Couldn't find that person. Try again?</div> : <div />}
+                : this.props.notFound
+                    ? <div className="personError">Couldn't find that person. Try again?</div>
+                    : <div />}
       </div>
     )
   }

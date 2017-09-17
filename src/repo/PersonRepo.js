@@ -26,7 +26,11 @@ class ArticleRepo {
         sentiment: this.genRand(30)
       }
     };
-    return Promise.resolve(mockProfiles[name]);
+    if (name in mockProfiles) {
+      return Promise.resolve(mockProfiles[name]);
+    } else {
+      return Promise.reject();
+    }
   }
 
   getPosts(profile) {
