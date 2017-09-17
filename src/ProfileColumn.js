@@ -13,7 +13,29 @@ class ProfileColumn extends Component {
       person: null,
       itemsIsLoading: false,
       items: [],
+      chooser: false,
     }
+  }
+
+  showProfileList() {
+    if (this.state.chooser) {
+      const names = this.props.repo.getNames(this.state.name)
+      console.log(names)
+      return names.then(ns => {
+        console.log(ns);
+        return ns.map(n => (<div onClick={this.clickPerson.bind(this)}>
+          <img className="personImg" src={n.img} alt={n.name}/>
+          <div className="personName">{n.name}</div>
+          <div className="personId">{n.userId}</div>
+        </div>))
+      });
+    }
+    return ''
+  }
+
+  clickPerson() {
+    console.log(this)
+
   }
 
   onSubmit(e) {
@@ -27,6 +49,7 @@ class ProfileColumn extends Component {
       person: null,
       itemsIsLoading: true,
       items: [],
+      chooser: true,
     });
     this.props.repo.getProfile(name).then(person => {
       this.setState({
@@ -61,6 +84,7 @@ class ProfileColumn extends Component {
           <form onSubmit={this.onSubmit.bind(this)} >
             <input type="text" className="input" name="url" placeholder="Enter a person's name..." />
           </form>
+          {this.showProfileList()}
           <Profile notFound={this.state.personNotFound} isLoading={this.state.personIsLoading} person={this.state.person} />
           <Feed isLoading={this.state.itemsIsLoading} items={this.state.items} />
         </div>
