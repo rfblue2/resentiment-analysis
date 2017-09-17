@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Profile from './people/Profile';
 import Feed from './feed/Feed';
 import ArticleTile from './feed/ArticleTile';
+import PulseLoader from 'halogen/PulseLoader';
 
 import './ProfileColumn.css'
 
@@ -15,36 +16,50 @@ class ProfileColumn extends Component {
       person: null,
       itemsIsLoading: false,
       items: [],
-      chooser: false,
       choices: []
     }
   }
 
   showProfileList() {
+    this.setState({
+      personIsLoading: true,
+    });
     const names = this.props.repo.getNames(this.state.name)
     names.then(ns => {
       var elems = [];
       console.log(elems);
       for (var n in ns) {
-        elems.push((<li className="choice" key={n} onClick={this.clickPerson.bind(this)}>
+        elems.push((<div className="choice" key={n} onClick={() => this.clickPerson(ns[n])}>
           <img className="personImg" src={ns[n]['img']} alt={n}/>
           <div className="personName">{ns[n]['names']}</div>
           <div className="personId">{ns[n]['userId']}</div>
-        </li>));
+        </div>));
       }
       this.setState({
+        personIsLoading: false,
         choices: elems
       });
     });
   }
 
-  clickPerson() {
-    console.log(JSON.stringify(this))
-
+  clickPerson(person) {
     this.setState({
-      choices: []
+      person,
+      choices: [],
+      itemsIsLoading: true,
     });
 
+    // Load posts one at a time
+    this.props.repo.getPosts(person, newPost => {
+      this.setState(state => {
+        state.items = state.items.concat([<ArticleTile article={newPost} key={newPost.title}/>]);
+        return state;
+      });
+    }, () => {
+      this.setState({
+        itemsIsLoading: false,
+      })
+    });
   }
 
   onSubmit(e) {
@@ -53,39 +68,9 @@ class ProfileColumn extends Component {
     const name = e.target.url.value;
     this.setState({
       name: name,
-      personIsLoading: true,
-      personNotFound: false,
-      person: null,
-      itemsIsLoading: true,
       items: [],
-      chooser: true,
     });
     this.showProfileList();
-    this.props.repo.getProfile(name).then(person => {
-      this.setState({
-        personIsLoading: false,
-        person: person,
-      });
-
-      // Load posts one at a time
-      this.props.repo.getPosts(person, newPost => {
-        this.setState(state => {
-          state.items = state.items.concat([<ArticleTile article={newPost} key={newPost.title}/>]);
-          return state;
-        });
-      }, () => {
-        this.setState({
-          itemsIsLoading: false,
-        })
-      });
-    }).catch(e => {
-      console.error(e);
-      this.setState({
-        personIsLoading: false,
-        personNotFound: true,
-        itemsIsLoading: false,
-      });
-    });
   }
 
   render() {
@@ -94,11 +79,10 @@ class ProfileColumn extends Component {
           <form onSubmit={this.onSubmit.bind(this)} >
             <input type="text" className="input" name="url" placeholder="Enter a person's name..." />
           </form>
-          <Profile notFound={this.state.personNotFound} isLoading={this.state.personIsLoading} person={this.state.person} />
+          {this.state.personIsLoading && <PulseLoader color="gray" size="20px" margin="10px" />}
+          {this.state.choices}
+          {this.state.person && <Profile person={this.state.person} />}
           <Feed isLoading={this.state.itemsIsLoading} items={this.state.items} />
-          <ul>
-            {this.state.choices}
-          </ul>
         </div>
     );
   }
