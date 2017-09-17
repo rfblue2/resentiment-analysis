@@ -73,31 +73,6 @@ class ProfileColumn extends Component {
       items: [],
     });
     this.showProfileList(name);
-    this.props.repo.getProfile(name).then(person => {
-      this.setState({
-        personIsLoading: false,
-        person: person,
-      });
-
-      // Load posts one at a time
-      this.props.repo.getPosts(person, newPost => {
-        this.setState(state => {
-          state.items = state.items.concat([<ArticleTile article={newPost} key={newPost.title}/>]);
-          return state;
-        });
-      }, () => {
-        this.setState({
-          itemsIsLoading: false,
-        })
-      });
-    }).catch(e => {
-      console.error(e);
-      this.setState({
-        personIsLoading: false,
-        personNotFound: true,
-        itemsIsLoading: false,
-      });
-    });
   }
 
   render() {
