@@ -26,10 +26,10 @@ class ArticleRepo {
         sentiment: this.genRand(30)
       }
     };
-    return mockProfiles[name];
+    return Promise.resolve(mockProfiles[name]);
   }
 
-  getPosts(name) {
+  getPosts(profile) {
     const mockPosts = {
       "www.1.com": {
         title: "test article",
@@ -68,7 +68,7 @@ class ArticleRepo {
         sentiment: this.genRand(29)
       }
     };
-    return Object.values(mockPosts);
+    return Promise.resolve(Object.values(mockPosts));
   }
 
 }
