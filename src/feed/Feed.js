@@ -9,9 +9,12 @@ class Feed extends Component {
       .filter(filter)
       .map(a => <ArticleTile article={a} key={a.id} />);
     return (
-      <ul className="feedView">
-        {newsTiles}
-      </ul>
+      <div className="feedView">
+        <h3>Feed</h3>
+        <ul>
+          {newsTiles}
+        </ul>
+      </div>
     );
   }
 

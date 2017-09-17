@@ -1,6 +1,6 @@
 .articleTile {
     box-shadow: 1px 1px 4px rgba(0,0,0,0.3);
-    margin: 10px;
+    margin: 10px 0 20px 0;
     cursor: pointer;
     position: relative;
     padding: 10px 10px 30px 10px;

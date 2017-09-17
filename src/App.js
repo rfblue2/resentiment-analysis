@@ -51,7 +51,11 @@ class App extends Component {
         <div className="App-header">
           <h2>News Sentiment Analysis</h2>
         </div>
-        <Feed articles={mockArticles} />
+        <div className="container">
+          <h2>Welcome</h2>
+          <input type="text" className="input" placeholder="Enter an article URL..." />
+          <Feed articles={mockArticles} />
+        </div>
       </div>
     );
   }
