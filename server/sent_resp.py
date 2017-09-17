@@ -4,8 +4,6 @@ class SentimentElement:
     def __init__(self, url, cmts):
         self._url = url
         self._sent = []
-        self._highest = {}
-        self._lowest = {}
 
         lowest_cmt, lowest_val = None, 2
         highest_cmt, highest_val = None, -2
@@ -17,10 +15,9 @@ class SentimentElement:
                 lowest_cmt, lowest_val = k, v
 
         if not highest_cmt is None:
-            self._highest = highest_cmt
-
+            self._highest = {"url": highest_cmt[0], "text": highest_cmt[1]}
         if not lowest_cmd is None:
-            self._lowest = lowest_cmt
+            self._lowest = {"url": lowest_cmt[0], "text": lowest_cmt[1]}
 
     @property
     def json_obj(self):
