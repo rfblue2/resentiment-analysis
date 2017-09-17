@@ -93,6 +93,13 @@ class ArticleRepo {
       };
       return Promise.resolve(mockResults);
     }
+    return fetch('http://localhost:5000/searchname?name=' + name, {
+        mode: 'cors'
+      }).then(res => {
+        return res.json();
+      }).catch(e => {
+        console.log(e);
+      });
 
     // TODO
   }

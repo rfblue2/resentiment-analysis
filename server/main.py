@@ -96,7 +96,7 @@ def search_handler():
 def searchName():
     if request.method == "GET":
         name = request.args['name']
-        return jsonify(graph_client.search(name))
+        return jsonify(facebook_client.search_name(name))
     else:
         raise TypeError("Wrong Method")
 
