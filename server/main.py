@@ -16,9 +16,37 @@ facebook_client = FacebookClient()
 fb_sentiment = FacebookSentiment()
 mongodb = mongo_client["news-sentiment"]
 
+clients_dict = {}
+client_comments_dict = {}
+
 @app.route("/", methods = ["GET"])
 def root_handler():
     return "Hello world!"
+
+@app.route("/profile/", methods = ["GET"])
+def profile_handler():
+    fbid = request.args.get('fbid')
+    clients_dict[fbid] = facebook_client.get_posts(fbid)
+    try:
+        client_comments_dict[fbid] = facebook_client.get_comments(fbid, clients_dict[fbid].__next__())
+    except StopIteration:
+        return "stopiteration"
+    return "a"
+
+@app.route("/query/", methods = ["GET"])
+def query_handler():
+    fbid = request.args.get('fbid')
+    if client_comments_dict[fbid] is None:
+        return "b"
+    fbid = request.args.get('fbid')
+    sentiments = [{ "sentiment": fb_sentiment.get_comment_sentiment(comment), "comment" : comment } for comment in client_comments_dict[fbid]]
+    try:
+        post = clients_dict[fbid].__next__()
+        client_comments_dict[fbid] = facebook_client.get_comments(fbid, post)
+    except StopIteration:
+        client_comments_dict[fbid] = None
+        return "c"
+    return jsonify(sentiments)
 
 @app.route("/search/", methods = ["GET"])
 def search_handler():
@@ -27,7 +55,9 @@ def search_handler():
         fbid = request.args.get('fbid')
         if not fbid is None:
             postgen = facebook_client.get_posts(fbid)
-            comments = [comment for post in postgen for comment in facebook_client.get_comments(fbid, post, 1)]
+            post = postgen.__next__()
+            comments = [comment for comment in facebook_client.get_comments(fbid, post)]
+            # comments = [comment for post in postgen for comment in facebook_client.get_comments(fbid, post, 1)]
             return jsonify([(fb_sentiment.get_comment_sentiment(comment), comment) for comment in comments])
 
         news_url = request.args.get('query')
@@ -47,20 +77,20 @@ def search_handler():
     else:
         raise TypeError("Wrong Method")
 
-@app.route("/query/", methods = ["GET"])
-def query_handler():
+# @app.route("/query/", methods = ["GET"])
+# def query_handler():
 
-    if request.method == "GET":
-        iterator = mongodb.entries.find()
-        elems = {}
-        for entry in iterator:
-            elems[entry["url"]] = parse_mongodb_entry(entry)
+#     if request.method == "GET":
+#         iterator = mongodb.entries.find()
+#         elems = {}
+#         for entry in iterator:
+#             elems[entry["url"]] = parse_mongodb_entry(entry)
 
-        resp = SentimentResponse(elems)
+#         resp = SentimentResponse(elems)
 
-        return jsonify(resp.json_str)
-    else:
-        raise TypeError("Wrong Method")
+#         return jsonify(resp.json_str)
+#     else:
+#         raise TypeError("Wrong Method")
 
 @app.route("/searchname", methods = ["GET"])
 def searchName():

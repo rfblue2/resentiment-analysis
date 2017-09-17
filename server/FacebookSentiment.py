@@ -55,7 +55,6 @@ class FacebookSentiment(object):
             data_dict = {"word": idxs}
             r = requests.post(self.inference_server, json=data_dict)
             inferred_obj = json.loads(r.text)
-            print(inferred_obj)
             x = inferred_obj["data"][0][0]
             y = inferred_obj["data"][0][1]
             score = x - y
