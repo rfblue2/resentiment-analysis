@@ -72,7 +72,7 @@ class ProfileColumn extends Component {
       name: name,
       items: [],
     });
-    this.showProfileList(name);
+    this.showProfileList(this.state.name);
     this.props.repo.getProfile(name).then(person => {
       this.setState({
         personIsLoading: false,
