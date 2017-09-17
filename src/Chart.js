@@ -17,7 +17,7 @@ class Chart extends Component {
         height = +svg.attr("height");
 
     var x = d3.scaleLinear()
-        .domain([30, 110])
+        .domain([0, 100])
         .range([0, width]);
 
     var y = d3.scaleLinear()
