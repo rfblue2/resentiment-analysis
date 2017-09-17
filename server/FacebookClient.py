@@ -1,6 +1,7 @@
 import requests
 import re
 from bs4 import BeautifulSoup
+import concurrent.futures
 
 POST_ID_REGEX = re.compile(r'"top_level_post_id":"(\d+)"')
 
@@ -52,7 +53,6 @@ class FacebookClient(object):
                 should_continue = True
                 try:
                     comment = elem.parent.parent.next.nextSibling.text
-                    print(comment)
                     comments.append(comment)
                 except AttributeError:
                     pass
@@ -62,6 +62,18 @@ class FacebookClient(object):
         return comments
 
 c = FacebookClient()
-for post_id in c.get_posts('4'):
-    print(post_id)
-    print(c.get_comments('4', post_id))
+
+with concurrent.futures.ThreadPoolExecutor(max_workers=100) as executor:
+    user_id = '4'
+    future_to_post_id = {
+        executor.submit(c.get_comments, user_id, post_id): post_id
+        for post_id in c.get_posts('4')
+    }
+    for future in concurrent.futures.as_completed(future_to_post_id):
+        post_id = future_to_post_id[future]
+        try:
+            data = future.result()
+        except Exception as exc:
+            print('%r generated an exception: %s' % (post_id, exc))
+        else:
+            print('%r post returned %d comments' % (post_id, len(data)))
