@@ -3,6 +3,7 @@ import tweepy
 from tweepy import OAuthHandler
 from textblob import TextBlob
 import requests
+import json
 
 # http://www.geeksforgeeks.org/twitter-sentiment-analysis-using-python/
  
@@ -15,10 +16,22 @@ class TwitterClient(object):
         Class constructor or initialization method.
         '''
         # keys and tokens from the Twitter Dev Console
-        consumer_key = 'PLACEHOLDER'
-        consumer_secret = 'PLACEHOLDER'
-        access_token = 'PLACEHOLDER'
-        access_token_secret = 'PLACEHOLDER'
+
+        consumer_key = ''
+        consumer_secret = ''
+        access_token = ''
+        access_token_secret = ''
+
+        try:
+            with open(".env.json") as f:
+                d = json.load(f)
+                consumer_key = d["twitter"]["consumer_key"]
+                consumer_secret = d["twitter"]["consumer_secret"]
+                access_token = d["twitter"]["access_token"]
+                access_token_secret = d["twitter"]["access_token_secret"]
+        except:
+            print("Error: reading access tokens from .env.json failed")
+
 
         self.dict = self.read_dict("word_dict.txt")
         self.inference_server = "http://localhost:8000/"
