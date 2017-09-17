@@ -4,6 +4,11 @@ import Feed from './feed/Feed'
 import ArticleRepo from './ArticleRepo'
 
 class App extends Component {
+  onSubmit(e) {
+    e.preventDefault();
+    console.log(e.target.url.value);
+  }
+
   render() {
     const repo = new ArticleRepo();
     return (
@@ -13,7 +18,9 @@ class App extends Component {
         </div>
         <div className="container">
           <h2>Welcome</h2>
-          <input type="text" className="input" placeholder="Enter an article URL..." />
+          <form onSubmit={this.onSubmit.bind(this)} >
+            <input type="text" className="input" name="url" placeholder="Enter an article URL..." />
+          </form>
           <Feed articles={repo.getArticleNames()} />
         </div>
       </div>
