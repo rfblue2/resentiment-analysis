@@ -4,6 +4,7 @@
     padding: 10px;
     box-sizing: border-box;
     background-color: white;
+    min-height: 100px;
 }
 
 .personName {
@@ -16,8 +17,8 @@
     position: absolute;
     right: 10px;
     top: 10px;
-    height: 100px;
-    width: 100px;
+    height: 80px;
+    width: 80px;
 }
 
 .personChart svg {

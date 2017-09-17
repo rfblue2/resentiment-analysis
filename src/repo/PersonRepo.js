@@ -76,47 +76,25 @@ class ArticleRepo {
 
   // get name/id/imgs of possible profiles given query name
   getNames(name) {
-    const mockResults = {
-      "Alex": {
-        name: "Alex",
-        userId: "alex",
-        img: "http://via.placeholder.com/100x100",
-        sentiment: genRand(30),
-      },
-      "Casey": {
-        name: "Casey",
-        userId: "casey",
-        img: "http://via.placeholder.com/100x100",
-        sentiment: genRand(30),
-      }
-    };
-    return Promise.resolve(mockResults);
-  }
-
-  getProfile(name) {
-    const mockProfiles = {
-      "Alex": {
-        name: "Alex",
-        img: "http://via.placeholder.com/100x100",
-        gender: "m",
-        most_pos: "most positive alex comment",
-        most_neg: "most negative alex comment",
-        sentiment: genRand(30)
-      },
-      "Casey": {
-        name: "Casey",
-        img: "http://via.placeholder.com/100x100",
-        gender: "f",
-        most_pos: "most positive casey comment",
-        most_neg: "most negative casey comment",
-        sentiment: genRand(30)
-      }
-    };
-    if (name in mockProfiles) {
-      return Promise.resolve(mockProfiles[name]);
-    } else {
-      return Promise.reject();
+    if (this.useMocks) {
+      const mockResults = {
+        "Alex": {
+          name: "Alex",
+          userId: "alex",
+          img: "http://via.placeholder.com/100x100",
+          sentiment: genRand(30),
+        },
+        "Casey": {
+          name: "Casey",
+          userId: "casey",
+          img: "http://via.placeholder.com/100x100",
+          sentiment: genRand(30),
+        }
+      };
+      return Promise.resolve(mockResults);
     }
+
+    // TODO
   }
 
   getPosts(profile, postCb, doneCb) {

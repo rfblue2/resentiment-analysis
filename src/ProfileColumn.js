@@ -5,6 +5,7 @@ import ArticleTile from './feed/ArticleTile';
 import PulseLoader from 'halogen/PulseLoader';
 
 import './ProfileColumn.css'
+import './people/Profile.css'
 
 class ProfileColumn extends Component {
   constructor(props) {
@@ -29,9 +30,9 @@ class ProfileColumn extends Component {
       var elems = [];
       console.log(elems);
       for (var n in ns) {
-        elems.push((<div className="choice" key={n} onClick={() => this.clickPerson(ns[n])}>
+        elems.push((<div className="personProfile" key={n} onClick={() => this.clickPerson(ns[n])}>
           <img className="personImg" src={ns[n]['img']} alt={n}/>
-          <div className="personName">{ns[n]['names']}</div>
+          <div className="personName">{ns[n]['name']}</div>
           <div className="personId">{ns[n]['userId']}</div>
         </div>));
       }
