@@ -1,13 +1,17 @@
 import React, { Component } from 'react'
 import ArticleTile from './ArticleTile'
+import ArticleRepo from '../ArticleRepo'
 import './Feed.css'
 
 class Feed extends Component {
   // Construct a single feed column
   FeedView(articles, filter) {
+    const repo = new ArticleRepo();
+    const fullArticles = repo.getArticles();
     const newsTiles = articles
+      .map(name => fullArticles[name])
       .filter(filter)
-      .map(a => <ArticleTile article={a} key={a.id} />);
+      .map(a => <ArticleTile article={a} key={a.title} />);
     return (
       <div className="feedView">
         <h3>Feed</h3>

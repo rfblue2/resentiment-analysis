@@ -54,7 +54,7 @@ class Chart extends Component {
 
   render() {
     return (
-      <svg ref={(elem) => { this.svg = elem; }} width="200" height="200" />
+      <svg ref={(elem) => { this.svg = elem; }} width={this.props.chartWidth || "200"} height={this.props.chartHeight || "200"} />
     );
   }
 }
