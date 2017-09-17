@@ -21,11 +21,11 @@ class ProfileColumn extends Component {
     }
   }
 
-  showProfileList() {
+  showProfileList(name) {
     this.setState({
       personIsLoading: true,
     });
-    const names = this.props.repo.getNames(this.state.name)
+    const names = this.props.repo.getNames(name)
     names.then(ns => {
       var elems = [];
       console.log(elems);
@@ -72,7 +72,32 @@ class ProfileColumn extends Component {
       name: name,
       items: [],
     });
-    this.showProfileList();
+    this.showProfileList(name);
+    this.props.repo.getProfile(name).then(person => {
+      this.setState({
+        personIsLoading: false,
+        person: person,
+      });
+
+      // Load posts one at a time
+      this.props.repo.getPosts(person, newPost => {
+        this.setState(state => {
+          state.items = state.items.concat([<ArticleTile article={newPost} key={newPost.title}/>]);
+          return state;
+        });
+      }, () => {
+        this.setState({
+          itemsIsLoading: false,
+        })
+      });
+    }).catch(e => {
+      console.error(e);
+      this.setState({
+        personIsLoading: false,
+        personNotFound: true,
+        itemsIsLoading: false,
+      });
+    });
   }
 
   render() {
