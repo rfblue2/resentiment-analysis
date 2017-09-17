@@ -11,15 +11,13 @@ class SentimentElement:
             self._highest = json_obj["most_positive"]
         else:
             self._sent = []
-            lowest_cmt, lowest_val = None, 2
-            highest_cmt, highest_val = None, -2
-            for k1, k2 in cmts:
-                v = cmts[(k1, k2)]
+            lowest_cmt, lowest_val = None, None
+            highest_cmt, highest_val = None, None
+            for (k1, k2), v in cmts.items():
                 self._sent.append(v)
-                print(self._sent)
-                if v > highest_val:
+                if highest_val is None or v > highest_val:
                     highest_cmt, highest_val = (k1, k2), v
-                if v < lowest_val:
+                if lowest_val is None or v < lowest_val:
                     lowest_cmt, lowest_val = (k1, k2), v  
             if not highest_cmt is None:
                 self._highest = {"url": highest_cmt[0], "text": highest_cmt[1]}
@@ -53,8 +51,8 @@ class SentimentResponse:
     def __init__(self, elems):
         self._list = {}
 
-        for url in elems:
-            self._list[url] = elems[url].json_obj
+        for url, elem in elems.items():
+            self._list[url] = elem.json_obj
 
     @property
     def json_str(self):
