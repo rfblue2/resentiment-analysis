@@ -14,14 +14,6 @@ class Profile extends Component {
         <div className="personChart">
           <Chart data={this.props.person.sentiment} ref={(e) => { this.personChart = e; }} />
         </div>
-        <div className="comment">
-          Most Positive Comment <br/>
-          {this.props.person.most_pos}
-        </div>
-        <div className="comment">
-          Most Negative Comment <br/>
-          {this.props.person.most_neg}
-        </div>
       </div>
     )
   }

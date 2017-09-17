@@ -1,0 +1,100 @@
+.articleTile {
+    margin: 0 0 20px 0;
+}
+
+.articleItem {
+    box-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+    cursor: pointer;
+    position: relative;
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: white;
+}
+
+.articleTile_modal .articleItem {
+    transition: top 0.5s, left 0.5s, width 0.5s, padding-bottom 0.5s;
+    top: 100px !important;
+    left: calc(50% - 300px) !important;
+    width: 600px !important;
+}
+
+.articleTile_modal .articleWrapper {
+    cursor: pointer;
+    z-index: 100;
+    transition: background-color 0.5s;
+    background-color: rgba(0,0,0,0.3);
+}
+
+.articleItem:hover {
+    background-color: #eeeeee;
+}
+
+.articleTitle {
+    font-size: 1.2rem;
+    font-weight: 300;
+}
+
+.articleTile_modal .articleTitle {
+    transition: font-size 0.5s;
+    font-size: 1.5rem;
+}
+
+.articleDate {
+    font-size: 0.9rem;
+    font-weight: 300;
+}
+
+.articleChart {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    height: 200px;
+    width: 200px;
+    pointer-events: none;
+}
+
+.articleChart svg {
+    height: 200px;
+    width: 200px;
+}
+
+.articleTile_modal .articleChart,
+.articleTile_modal .articleChart svg {
+    transition: height 0.5s, width 0.5s;
+    height: 580px;
+    width: 580px;
+}
+
+.articleTop {
+    position: relative;
+    padding-bottom: 30px;
+}
+
+.articleTile_modal .articleTop {
+    transition: padding-bottom 0.5s;
+    padding-bottom: 200px;
+}
+
+.articleBottom {
+    height: 0;
+    overflow: hidden;
+}
+
+.articleTile_modal .articleBottom {
+    transition: height 0.5s, margin-top 0.5s;
+    margin-top: 30px;
+    height: auto;
+}
+
+.comments {
+    display: flex;
+    flex-direction: row;
+}
+
+.comment {
+    flex: 1;
+    box-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+    margin: 10px 10px;
+    position: relative;
+    padding: 10px 10px 30px 10px;
+}

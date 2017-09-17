@@ -1,0 +1,8 @@
+.feedView h3 {
+    font-size: 1.5rem;
+}
+
+.feedView ul {
+    list-style-type: none;
+    padding: 0;
+}

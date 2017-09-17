@@ -28,11 +28,3 @@
     display: block;
     margin: auto;
 }
-
-.comment {
-    flex: 1;
-    box-shadow: 1px 1px 4px rgba(0,0,0,0.3);
-    margin: 10px 10px;
-    position: relative;
-    padding: 10px 10px 30px 10px;
-}

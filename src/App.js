@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import './App.css';
 import Profile from './people/Profile'
+import Feed from './feed/Feed';
 import PersonRepo from './repo/PersonRepo'
 
 class App extends Component {
@@ -44,13 +45,15 @@ class App extends Component {
                 <input type="text" className="input" name="url" placeholder="Enter a person's name..." />
               </form>
               <Profile person={repo.getProfile(this.state.name1)} />
+              <Feed name={this.state.name1} />
             </div>
 
             <div className="profileColumn">
               <form onSubmit={this.onSubmit2.bind(this)} >
                 <input type="text" className="input" name="url" placeholder="Enter a person's name..." />
               </form>
-              <Profile person={repo.getProfile(this.state.name2)} />
+              <Profile person={repo.getProfile(this.state.name1)} />
+              <Feed articles={this.state.name1} />
             </div>
           </div>
 
