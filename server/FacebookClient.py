@@ -9,8 +9,8 @@ class FacebookClient(object):
     def __init__(self):
         self.session = requests.Session()
         r = self.session.post('https://mbasic.facebook.com/login.php', data={
-            'email': 'zach.bot@zacharyliu.com',
-            'pass': '3iLZzq41ekxu',
+            'email': 'ewilden.git@gmail.com',
+            'pass': 'facebooksucks',
         })
         print(r)
 
