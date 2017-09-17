@@ -79,12 +79,12 @@ class ArticleRepo {
     const mockResults = {
       "Alex": {
         name: "Alex",
-        id: "alex",
+        userId: "alex",
         img: "http://via.placeholder.com/100x100"
       },
       "Casey": {
         name: "Casey",
-        id: "casey",
+        userId: "casey",
         img: "http://via.placeholder.com/100x100"
       }
     }

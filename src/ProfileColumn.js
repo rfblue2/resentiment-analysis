@@ -3,6 +3,8 @@ import Profile from './people/Profile';
 import Feed from './feed/Feed';
 import ArticleTile from './feed/ArticleTile';
 
+import './ProfileColumn.css'
+
 class ProfileColumn extends Component {
   constructor(props) {
     super(props);
@@ -14,27 +16,34 @@ class ProfileColumn extends Component {
       itemsIsLoading: false,
       items: [],
       chooser: false,
+      choices: []
     }
   }
 
   showProfileList() {
-    if (this.state.chooser) {
-      const names = this.props.repo.getNames(this.state.name)
-      console.log(names)
-      return names.then(ns => {
-        console.log(ns);
-        return ns.map(n => (<div onClick={this.clickPerson.bind(this)}>
-          <img className="personImg" src={n.img} alt={n.name}/>
-          <div className="personName">{n.name}</div>
-          <div className="personId">{n.userId}</div>
-        </div>))
+    const names = this.props.repo.getNames(this.state.name)
+    names.then(ns => {
+      var elems = [];
+      console.log(elems);
+      for (var n in ns) {
+        elems.push((<li className="choice" key={n} onClick={this.clickPerson.bind(this)}>
+          <img className="personImg" src={ns[n]['img']} alt={n}/>
+          <div className="personName">{ns[n]['names']}</div>
+          <div className="personId">{ns[n]['userId']}</div>
+        </li>));
+      }
+      this.setState({
+        choices: elems
       });
-    }
-    return ''
+    });
   }
 
   clickPerson() {
-    console.log(this)
+    console.log(JSON.stringify(this))
+
+    this.setState({
+      choices: []
+    });
 
   }
 
@@ -51,6 +60,7 @@ class ProfileColumn extends Component {
       items: [],
       chooser: true,
     });
+    this.showProfileList();
     this.props.repo.getProfile(name).then(person => {
       this.setState({
         personIsLoading: false,
@@ -84,9 +94,11 @@ class ProfileColumn extends Component {
           <form onSubmit={this.onSubmit.bind(this)} >
             <input type="text" className="input" name="url" placeholder="Enter a person's name..." />
           </form>
-          {this.showProfileList()}
           <Profile notFound={this.state.personNotFound} isLoading={this.state.personIsLoading} person={this.state.person} />
           <Feed isLoading={this.state.itemsIsLoading} items={this.state.items} />
+          <ul>
+            {this.state.choices}
+          </ul>
         </div>
     );
   }

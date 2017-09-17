@@ -1,0 +1,15 @@
+ul {
+    list-style-type: none;
+}
+
+li:hover {
+    background-color: #eeeeee;
+}
+.choice {
+    cursor: pointer;
+    box-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+    position: relative;
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: white;
+}
