@@ -12,7 +12,7 @@ class ProfileColumn extends Component {
       personNotFound: false,
       person: null,
       itemsIsLoading: false,
-      items: null,
+      items: [],
     }
   }
 
@@ -26,20 +26,21 @@ class ProfileColumn extends Component {
       personNotFound: false,
       person: null,
       itemsIsLoading: true,
-      items: null,
+      items: [],
     });
     this.props.repo.getProfile(name).then(person => {
       this.setState({
         personIsLoading: false,
         person: person,
       });
-      this.props.repo.getPosts(person).then(articles => {
-        this.setState({
-          itemsIsLoading: false,
-          items: articles.map(a => <ArticleTile article={a} key={a.title}/>),
+
+      // Load posts one at a time
+      this.props.repo.getPosts(person, newPost => {
+        this.setState(state => {
+          state.items = state.items.concat([<ArticleTile article={newPost} key={newPost.title}/>]);
+          return state;
         });
-      }).catch(e => {
-        console.error(e);
+      }, () => {
         this.setState({
           itemsIsLoading: false,
         })

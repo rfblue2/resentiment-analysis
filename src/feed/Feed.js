@@ -13,10 +13,9 @@ class Feed extends Component {
       <div className="feedView">
         <h3>Feed</h3>
         <ul>
-          {this.props.isLoading
-              ? <PulseLoader color="gray" size="20px" margin="10px" />
-              : this.props.items}
+          {this.props.items}
         </ul>
+        {this.props.isLoading && <PulseLoader color="gray" size="20px" margin="10px" />}
       </div>
     );
   }
