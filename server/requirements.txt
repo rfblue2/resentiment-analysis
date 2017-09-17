@@ -5,6 +5,7 @@ chardet==3.0.4
 click==6.7
 Eve==0.7.4
 Events==0.2.2
+facebook-sdk==2.0.0
 Flask==0.12
 Flask-PyMongo==0.5.1
 gender-guesser==0.4.0
