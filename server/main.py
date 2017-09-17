@@ -67,7 +67,14 @@ def search_handler():
 def query_handler():
     
     if request.method == "GET":
-        pass
+        iterator = mongodb.entries.find()
+        elems = {}
+        for entry in iterator:
+            elems[entry["url"]] = parse_mongodb_entry(entry)
+
+        resp = SentimentResponse(elems)
+
+        return json_ok(resp.json_str)
     else:
         raise TypeError("Wrong Method")
 
