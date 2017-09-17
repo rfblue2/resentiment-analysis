@@ -32,7 +32,12 @@ class Chart extends Component {
     this.y = d3.scaleLinear()
         .domain([0, 0.04])
         .range([height - margin, margin]);
+    this.path = this.svg.append("path");
 
+    this.drawChart();
+  }
+
+  componentWillReceiveProps(nextProps) {
     this.drawChart();
   }
 
@@ -50,7 +55,7 @@ class Chart extends Component {
         .x((d) => { return this.x(d[0]); })
         .y((d) => { return this.y(d[1]); });
 
-    this.svg.append("path")
+    this.path
         .datum(this.getDensity())
         .attr("fill", "none")
         .attr("stroke", "#000")

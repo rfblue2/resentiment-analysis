@@ -54,6 +54,7 @@ class ProfileColumn extends Component {
     this.props.repo.getPosts(person, newPost => {
       this.setState(state => {
         state.items = state.items.concat([<ArticleTile article={newPost} key={newPost.title}/>]);
+        state.person = Object.assign({}, state.person, { sentiment: state.person.sentiment.concat(newPost.sentiment) });
         return state;
       });
     }, () => {

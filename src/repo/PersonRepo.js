@@ -82,13 +82,13 @@ class ArticleRepo {
           name: "Alex",
           userId: "alex",
           img: "http://via.placeholder.com/100x100",
-          sentiment: genRand(30),
+          sentiment: [],
         },
         "Casey": {
           name: "Casey",
           userId: "casey",
           img: "http://via.placeholder.com/100x100",
-          sentiment: genRand(30),
+          sentiment: [],
         }
       };
       return Promise.resolve(mockResults);
