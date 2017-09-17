@@ -84,19 +84,23 @@ class FacebookClient(object):
 
         return comments
 
-c = FacebookClient()
+def main():
+    c = FacebookClient()
 
-with concurrent.futures.ThreadPoolExecutor(max_workers=100) as executor:
-    user_id = '4'
-    future_to_post_id = {
-        executor.submit(c.get_comments, user_id, post_id): post_id
-        for post_id in c.get_posts('4')
-    }
-    for future in concurrent.futures.as_completed(future_to_post_id):
-        post_id = future_to_post_id[future]
-        try:
-            data = future.result()
-        except Exception as exc:
-            print('%r generated an exception: %s' % (post_id, exc))
-        else:
-            print('%r post returned %d comments' % (post_id, len(data)))
+    with concurrent.futures.ThreadPoolExecutor(max_workers=100) as executor:
+        user_id = '4'
+        future_to_post_id = {
+            executor.submit(c.get_comments, user_id, post_id): post_id
+            for post_id in c.get_posts('4')
+        }
+        for future in concurrent.futures.as_completed(future_to_post_id):
+            post_id = future_to_post_id[future]
+            try:
+                data = future.result()
+            except Exception as exc:
+                print('%r generated an exception: %s' % (post_id, exc))
+            else:
+                print('%r post returned %d comments' % (post_id, len(data)))
+
+if __name__ == "__main__":
+    main()

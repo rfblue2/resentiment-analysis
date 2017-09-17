@@ -3,6 +3,7 @@ from sent_resp import *
 from pymongo import MongoClient
 from TwitterSentiment import TwitterClient
 from FacebookClient import FacebookClient
+from FacebookSentiment import FacebookSentiment
 
 app = Flask(__name__)
 
@@ -12,6 +13,7 @@ def json_ok(json_str):
 twitter_client = TwitterClient()
 mongo_client = MongoClient()
 facebook_client = FacebookClient()
+fb_sentiment = FacebookSentiment()
 mongodb = mongo_client["news-sentiment"]
 
 @app.route("/", methods = ["GET"])
@@ -26,7 +28,7 @@ def search_handler():
         if not fbid is None:
             postgen = facebook_client.get_posts(fbid)
             comments = [comment for post in postgen for comment in facebook_client.get_comments(fbid, post, 1)]
-            return jsonify(comments)
+            return jsonify([(fb_sentiment.get_comment_sentiment(comment), comment) for comment in comments])
 
         news_url = request.args.get('query')
         entry = mongodb.entries.find_one({"url": news_url})
