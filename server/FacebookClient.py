@@ -13,6 +13,29 @@ class FacebookClient(object):
         })
         print(r)
 
+    # returns list of name/ id/ img urls
+    def search_name(self, name):
+        url = 'https://mbasic.facebook.com/search/?query=%s' % name.replace(' ', '+')
+        print(url)
+
+        data = self.session.get(url).text
+        soup = BeautifulSoup(data)
+
+        items = soup.select('.bl')
+        profiles = {}
+        for elem in items[0].table:
+            img_elem = elem.select('.bm')
+            text_elem = elem.select('.bo')
+            profile_name = text_elem[0].a.get_text()
+            profile_id = text_elem[0].a['href'].split('?')[0][1:]
+            profile_img = img_elem[0].img['src']
+            profiles[profile_id] = {}
+            profiles[profile_id]['name'] = profile_name
+            profiles[profile_id]['img'] = profile_img
+        print(profiles)
+        return profiles
+
+
     def get_posts(self, user_id):
         url = 'https://mbasic.facebook.com/profile.php?id=%s&v=timeline' % user_id
 
