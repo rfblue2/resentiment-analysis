@@ -24,3 +24,5 @@ yarn-error.log*
 # emacs garbage
 *~
 #*#
+
+server/__pycache__/

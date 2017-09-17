@@ -2,7 +2,6 @@ from flask import Flask, request, jsonify, render_template
 from sent_resp import *
 from pymongo import MongoClient
 from TwitterSentiment import TwitterClient
-from GraphApiClient import GraphApiClient
 from FacebookClient import FacebookClient
 
 app = Flask(__name__)
@@ -12,7 +11,6 @@ def json_ok(json_str):
 
 twitter_client = TwitterClient()
 mongo_client = MongoClient()
-graph_client = GraphApiClient()
 facebook_client = FacebookClient()
 mongodb = mongo_client["news-sentiment"]
 
@@ -27,8 +25,8 @@ def search_handler():
         fbid = request.args.get('fbid')
         if not fbid is None:
             postgen = facebook_client.get_posts(fbid)
-            postids = [post for post in postgen]
-            return jsonify(postids)
+            comments = [comment for post in postgen for comment in facebook_client.get_comments(fbid, post, 1)]
+            return jsonify(comments)
 
         news_url = request.args.get('query')
         entry = mongodb.entries.find_one({"url": news_url})
