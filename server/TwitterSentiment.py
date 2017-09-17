@@ -80,9 +80,12 @@ class TwitterClient(object):
         if (len(idxs) > 0):
             data_dict = {"word": idxs}
             r = requests.post(self.inference_server, json=data_dict)
-            print(idxs)
-            print(r.text)
-        return 0
+            inferred_obj = json.loads(r.text)
+            invroot2 = 0.7071067819
+            print(inferred_obj)
+            x = inferred_obj["data"][0][0]
+            y = inferred_obj["data"][0][1]
+        return invroot2 * (x - y)
 
     # def get_tweet_sentiment(self, tweet):
     #     '''
@@ -127,8 +130,6 @@ class TwitterClient(object):
                 parsed_tweet['text'] = tweet.text
                 # saving sentiment of tweet
                 parsed_tweet['sentiment'] = self.get_tweet_sentiment(tweet.text)
-                # saving sentiment score of tweet
-                parsed_tweet['sentiment-score'] = self.get_tweet_sentiment_score(tweet.text)
  
                 # appending parsed tweet to tweets list
                 if tweet.retweet_count > 0:
@@ -149,7 +150,11 @@ def main():
     # creating object of TwitterClient Class
     api = TwitterClient()
     # calling function to get tweets
-    tweets = api.get_tweets(query = 'Hillary Clinton', count = 100)
+    tweets = api.get_tweets(query = 'Donald Trump', count = 10)
+
+    for tweet in tweets:
+        print(tweet['text'])
+        print(tweet['sentiment'])
 
     # api.get_tweet_sentiment(tweets[0])
  
