@@ -76,39 +76,18 @@ class TwitterClient(object):
         '''
         # get indices of words in tweet 
         words = self.clean_tweet(tweet).split(" ")
-        idxs = [int(self.dict[word]) for word in words if word in self.dict]
+        idxs = [int(self.dict[word.lower()]) for word in words if word.lower() in self.dict]
+        invroot2 = 0.7071067819
+        score = 0.0
         if (len(idxs) > 0):
             data_dict = {"word": idxs}
             r = requests.post(self.inference_server, json=data_dict)
             inferred_obj = json.loads(r.text)
-            invroot2 = 0.7071067819
             print(inferred_obj)
             x = inferred_obj["data"][0][0]
             y = inferred_obj["data"][0][1]
-        return invroot2 * (x - y)
-
-    # def get_tweet_sentiment(self, tweet):
-    #     '''
-    #     Utility function to classify sentiment of passed tweet
-    #     using textblob's sentiment method
-    #     '''
-    #     # create TextBlob object of passed tweet text
-    #     analysis = TextBlob(self.clean_tweet(tweet))
-    #     # set sentiment
-    #     if analysis.sentiment.polarity > 0:
-    #         return 'positive'
-    #     elif analysis.sentiment.polarity == 0:
-    #         return 'neutral'
-    #     else:
-    #         return 'negative'
-
-    def get_tweet_sentiment_score(self, tweet):
-        '''
-        returns sentiment polarity of passed tweet
-        using textblob's sentiment method
-        '''
-        analysis = TextBlob(self.clean_tweet(tweet))
-        return analysis.sentiment.polarity
+            score = invroot2 * (x - y)
+        return score
 
     def get_tweets(self, query, count = 10):
         '''
@@ -150,35 +129,11 @@ def main():
     # creating object of TwitterClient Class
     api = TwitterClient()
     # calling function to get tweets
-    tweets = api.get_tweets(query = 'Donald Trump', count = 10)
+    tweets = api.get_tweets(query = '@tadfriend', count = 20)
 
     for tweet in tweets:
         print(tweet['text'])
         print(tweet['sentiment'])
-
-    # api.get_tweet_sentiment(tweets[0])
- 
-    # # picking positive tweets from tweets
-    # ptweets = [tweet for tweet in tweets if tweet['sentiment'] == 'positive']
-    # # percentage of positive tweets
-    # print("Positive tweets percentage: {} %".format(100*len(ptweets)/len(tweets)))
-    # # picking negative tweets from tweets
-    # ntweets = [tweet for tweet in tweets if tweet['sentiment'] == 'negative']
-    # # percentage of negative tweets
-    # print("Negative tweets percentage: {} %".format(100*len(ntweets)/len(tweets)))
-    # # percentage of neutral tweets
-    # print("Neutral tweets percentage: {} %".format(100*(len(tweets) - len(ntweets) - len(ptweets))/len(tweets)))
- 
-    # # printing first 5 positive tweets
-    # print("\n\nPositive tweets:")
-    # for tweet in ptweets[:10]:
-    #     print(tweet['text'])
- 
-    # # printing first 5 negative tweets
-    # print("\n\nNegative tweets:")
-    # for tweet in ntweets[:10]:
-    #     print(tweet['text'])
-    #     print(tweet['sentiment-score'])
  
 if __name__ == "__main__":
     # calling main function
