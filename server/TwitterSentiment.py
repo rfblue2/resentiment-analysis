@@ -34,7 +34,7 @@ class TwitterClient(object):
             print("Error: reading access tokens from .env.json failed")
 
 
-        self.dict = self.read_dict("comment_word_dict.txt")
+        self.dict = self.read_dict("word_dict.txt")
         self.inference_server = "http://localhost:8000/"
 
         # attempt authentication
