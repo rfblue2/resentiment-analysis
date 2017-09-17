@@ -18,6 +18,8 @@ class App extends Component {
         source: "test source",
         img: "http://via.placeholder.com/100x150",
         gender: "m",
+        most_pos: "most positive comment",
+        most_neg: "most negative comment",
         sentiment: this.genRand(24)
       },
       {
@@ -26,6 +28,8 @@ class App extends Component {
         source: "test source2",
         img: "http://via.placeholder.com/200x200",
         gender: "f",
+        most_pos: "most positive comment",
+        most_neg: "most negative comment",
         sentiment: this.genRand(30)
       },
       {
@@ -34,6 +38,8 @@ class App extends Component {
         source: "test source2",
         img: "http://via.placeholder.com/200x250",
         gender: "f",
+        most_pos: "most positive comment",
+        most_neg: "most negative comment",
         sentiment: this.genRand(34)
       },
       {
@@ -42,6 +48,8 @@ class App extends Component {
         source: "test source2",
         img: "http://via.placeholder.com/300x200",
         gender: "m",
+        most_pos: "most positive comment",
+        most_neg: "most negative comment",
         sentiment: this.genRand(29)
       }
     ];
