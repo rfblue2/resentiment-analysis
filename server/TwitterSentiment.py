@@ -4,6 +4,7 @@ from tweepy import OAuthHandler
 from textblob import TextBlob
 import requests
 import json
+import sys
 
 # http://www.geeksforgeeks.org/twitter-sentiment-analysis-using-python/
  
@@ -33,7 +34,7 @@ class TwitterClient(object):
             print("Error: reading access tokens from .env.json failed")
 
 
-        self.dict = self.read_dict("word_dict.txt")
+        self.dict = self.read_dict("comment_word_dict.txt")
         self.inference_server = "http://localhost:8000/"
 
         # attempt authentication
@@ -129,7 +130,7 @@ def main():
     # creating object of TwitterClient Class
     api = TwitterClient()
     # calling function to get tweets
-    tweets = api.get_tweets(query = '@tadfriend', count = 20)
+    tweets = api.get_tweets(query = sys.argv[1], count = 20)
 
     for tweet in tweets:
         print(tweet['text'])
