@@ -13,7 +13,29 @@ class ProfileColumn extends Component {
       person: null,
       itemsIsLoading: false,
       items: null,
+      chooser: false,
     }
+  }
+
+  showProfileList() {
+    if (this.state.chooser) {
+      const names = this.props.repo.getNames(this.state.name)
+      console.log(names)
+      return names.then(ns => {
+        console.log(ns);
+        return ns.map(n => (<div onClick={this.clickPerson.bind(this)}>
+          <img className="personImg" src={n.img} alt={n.name}/>
+          <div className="personName">{n.name}</div>
+          <div className="personId">{n.userId}</div>
+        </div>))
+      });
+    }
+    return ''
+  }
+
+  clickPerson() {
+    console.log(this)
+
   }
 
   onSubmit(e) {
@@ -27,31 +49,36 @@ class ProfileColumn extends Component {
       person: null,
       itemsIsLoading: true,
       items: null,
+      chooser: true,
     });
-    this.props.repo.getProfile(name).then(person => {
-      this.setState({
-        personIsLoading: false,
-        person: person,
-      });
-      this.props.repo.getPosts(person).then(articles => {
-        this.setState({
-          itemsIsLoading: false,
-          items: articles.map(a => <ArticleTile article={a} key={a.title}/>),
-        });
-      }).catch(e => {
-        console.error(e);
-        this.setState({
-          itemsIsLoading: false,
-        })
-      });
-    }).catch(e => {
-      console.error(e);
-      this.setState({
-        personIsLoading: false,
-        personNotFound: true,
-        itemsIsLoading: false,
-      });
-    });
+    // this.props.repo.getProfile(name).then(person => {
+    //   this.setState({
+    //     personIsLoading: false,
+    //     person: person,
+    //     chooser: false,
+    //   });
+    //   this.props.repo.getPosts(person).then(articles => {
+    //     this.setState({
+    //       itemsIsLoading: false,
+    //       items: articles.map(a => <ArticleTile article={a} key={a.title}/>),
+    //       chooser: false,
+    //     });
+    //   }).catch(e => {
+    //     console.error(e);
+    //     this.setState({
+    //       itemsIsLoading: false,
+    //       chooser: false,
+    //     })
+    //   });
+    // }).catch(e => {
+    //   console.error(e);
+    //   this.setState({
+    //     personIsLoading: false,
+    //     personNotFound: true,
+    //     itemsIsLoading: false,
+    //     chooser: false
+    //   });
+    // });
   }
 
   render() {
@@ -60,6 +87,7 @@ class ProfileColumn extends Component {
           <form onSubmit={this.onSubmit.bind(this)} >
             <input type="text" className="input" name="url" placeholder="Enter a person's name..." />
           </form>
+          {this.showProfileList()}
           <Profile notFound={this.state.personNotFound} isLoading={this.state.personIsLoading} person={this.state.person} />
           <Feed isLoading={this.state.itemsIsLoading} items={this.state.items} />
         </div>

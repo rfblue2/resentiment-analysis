@@ -7,6 +7,23 @@ class ArticleRepo {
     });
   }
 
+  // get name/id/imgs of possible profiles given query name
+  getNames(name) {
+    const mockResults = {
+      "Alex": {
+        name: "Alex",
+        id: "alex",
+        img: "http://via.placeholder.com/100x100"
+      },
+      "Casey": {
+        name: "Casey",
+        id: "casey",
+        img: "http://via.placeholder.com/100x100"
+      }
+    }
+    return Promise.resolve(mockResults);
+  }
+
   getProfile(name) {
     const mockProfiles = {
       "Alex": {
