@@ -1,0 +1,38 @@
+.personProfile {
+    display: flex;
+    flex-direction: column;
+    box-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+    position: relative;
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: white;
+}
+
+.personName {
+    flex: 1;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 300;
+}
+
+.personImg {
+    flex: 3;
+    display: block;
+    margin: auto;
+    height: 300px;
+    width: 300px;
+}
+
+.personChart {
+    flex: 2;
+    display: block;
+    margin: auto;
+}
+
+.comment {
+    flex: 1;
+    box-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+    margin: 10px 10px;
+    position: relative;
+    padding: 10px 10px 30px 10px;
+}

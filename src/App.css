@@ -7,7 +7,7 @@
 }
 
 .container {
-    max-width: 800px;
+    max-width: 70%;
     margin: 0 auto;
 }
 
@@ -18,4 +18,15 @@
     width: calc(100% - 40px);
     box-shadow: 1px 1px 4px rgba(0,0,0,0.3);
     border: 0;
+}
+
+.profileColumns {
+    margin: 10px;
+    flex-direction: row;
+    display: flex;
+}
+
+.profileColumn {
+    flex: 1;
+    margin: 10px 0;
 }
