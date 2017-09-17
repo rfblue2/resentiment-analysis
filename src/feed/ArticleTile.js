@@ -76,7 +76,7 @@ class ArticleTile extends Component {
               <div className="articleTitle">{this.props.article.length}</div>
               <div className="articleDate">Article Date</div>
               <div className="articleChart">
-                <Chart data={this.props.article.map(e => e.sentiment)} ref={(e) => { this.articleChart = e; }} />
+                <Chart data={this.props.article.sentiment} ref={(e) => { this.articleChart = e; }} />
               </div>
             </div>
             <div className="articleBottom">

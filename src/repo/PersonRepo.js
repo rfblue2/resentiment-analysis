@@ -51,7 +51,7 @@ class PostStream {
   }
 
   loop() {
-    fetch('localhost:5000/query/?fbid=' + this.profile.id).then(res => {
+    fetch('http://localhost:5000/query/?fbid=' + this.profile.userId).then(res => {
       const json = res.json();
       if (json.length > 0) {
         json.forEach(this.postCb);
@@ -63,7 +63,7 @@ class PostStream {
   }
 
   start() {
-    fetch('localhost:5000/profile/?fbid=' + this.profile.id).then(() => {
+    fetch('http://localhost:5000/profile/?fbid=' + this.profile.userId).then(() => {
       this.loop();
     });
   }
@@ -76,20 +76,20 @@ class ArticleRepo {
 
   // get name/id/imgs of possible profiles given query name
   getNames(name) {
-    if (this.useMocks) {
+    if (true || this.useMocks) {
       const mockResults = {
-        "Alex": {
-          name: "Alex",
-          userId: "alex",
+        "Sheryl": {
+          name: "Sheryl",
+          userId: "717545176",
           img: "http://via.placeholder.com/100x100",
           sentiment: [],
         },
-        "Casey": {
-          name: "Casey",
-          userId: "casey",
-          img: "http://via.placeholder.com/100x100",
-          sentiment: [],
-        }
+        // "Casey": {
+        //   name: "Casey",
+        //   userId: "casey",
+        //   img: "http://via.placeholder.com/100x100",
+        //   sentiment: [],
+        // }
       };
       return Promise.resolve(mockResults);
     }

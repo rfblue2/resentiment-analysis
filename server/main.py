@@ -26,11 +26,11 @@ def root_handler():
 @app.route("/profile/", methods = ["GET"])
 def profile_handler():
     fbid = request.args.get('fbid')
-    clients_dict[fbid] = facebook_client.get_posts(fbid)
-    try:
-        client_comments_dict[fbid] = facebook_client.get_comments(fbid, clients_dict[fbid].__next__())
-    except StopIteration:
-        return "stopiteration"
+    clients_dict[fbid] = facebook_client.get_posts_and_comments(fbid)
+    # try:
+    #     client_comments_dict[fbid] = facebook_client.get_comments(fbid, clients_dict[fbid].__next__())
+    # except StopIteration:
+    #     return "stopiteration"
     return "a"
 
 @app.route("/query/", methods = ["GET"])
@@ -38,13 +38,14 @@ def query_handler():
     fbid = request.args.get('fbid')
     if client_comments_dict[fbid] is None:
         return "b"
-    fbid = request.args.get('fbid')
-    sentiments = [{ "sentiment": fb_sentiment.get_comment_sentiment(comment), "comment" : comment } for comment in client_comments_dict[fbid]]
+    # fbid = request.args.get('fbid')
     try:
-        post = clients_dict[fbid].__next__()
-        client_comments_dict[fbid] = facebook_client.get_comments(fbid, post)
+        comments = clients_dict[fbid].__next__()
+        sentiments = [{ "sentiment": fb_sentiment.get_comment_sentiment(comment), "comment" : comment } for comment in comments]
+        # post = clients_dict[fbid].__next__()
+        # client_comments_dict[fbid] = facebook_client.get_comments(fbid, post)
     except StopIteration:
-        client_comments_dict[fbid] = None
+        # client_comments_dict[fbid] = None
         return "c"
     return jsonify(sentiments)
 

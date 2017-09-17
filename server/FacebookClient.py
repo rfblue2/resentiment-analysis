@@ -22,14 +22,16 @@ class FacebookClient(object):
         data = self.session.get(url).text
         soup = BeautifulSoup(data)
 
-        items = soup.select('.bl')
+        # print(soup.prettify())
+        items = soup.select('input[name="fb_dtsg"]')[0].next
         profiles = {}
-        for elem in items[0].table:
-            img_elem = elem.select('.bm')
-            text_elem = elem.select('.bo')
-            profile_name = text_elem[0].a.get_text()
-            profile_id = text_elem[0].a['href'].split('?')[0][1:]
-            profile_img = img_elem[0].img['src']
+        for elem in items.table:
+            # print(elem.prettify())
+            img_elem = elem.find('img')[0]
+            text_elem = img_elem.parent.nextSibling
+            profile_name = text_elem.a.get_text()
+            profile_id = text_elem.a['href'].split('?')[0][1:]
+            profile_img = img_elem.attr['src']
             profiles[profile_id] = {}
             profiles[profile_id]['name'] = profile_name
             profiles[profile_id]['img'] = profile_img
@@ -37,8 +39,9 @@ class FacebookClient(object):
         return profiles
 
 
-    def get_posts(self, user_id):
+    def get_posts(self, user_id, limit=20):
         url = 'https://mbasic.facebook.com/profile.php?id=%s&v=timeline' % user_id
+        count = 0
 
         while url is not None:
             print(url)
@@ -52,6 +55,10 @@ class FacebookClient(object):
                     if result is not None:
                         post_id = result.group(1)
                         yield post_id
+                        count += 1
+
+                        if count > limit:
+                            return
 
             next_a = soup.find_all('a', text='Show more')
             if len(next_a) > 0:

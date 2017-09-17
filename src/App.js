@@ -6,7 +6,7 @@ import ProfileColumn from './ProfileColumn';
 class App extends Component {
   constructor(props) {
     super(props);
-    this.repo = new PersonRepo(false);
+    this.repo = new PersonRepo();
   }
 
   render() {
