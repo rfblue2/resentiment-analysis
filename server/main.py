@@ -1,65 +1,33 @@
-from flask import Flask, request, Response
-from json import loads, dumps
+from flask import Flask, request, jsonify
 from sent_resp import *
 from pymongo import MongoClient
+from TwitterSentiment import TwitterClient
 
 app = Flask(__name__)
-
-#-------------------BEGIN TEST------------------------------
-
-class TwitterClient:
-    def __init__(self):
-        pass
-
-    def get_comments(self, url):
-        print(url)
-        return [(url, "")]
-
-class PaddleClient:
-    def __init__(self):
-        pass
-
-    def extract_numbers(self, cmt_text):
-        return []
-
-    def rate(self, nums):
-        return 0
-
-#-------------------END TEST----------------------------------
 
 def json_ok(json_str):
     return json_str, 200, {"Content-Type": "application/json"}
 
 twitter_client = TwitterClient()
-paddle_client = PaddleClient()
 mongo_client = MongoClient()
 mongodb = mongo_client["news-sentiment"]
         
-@app.route("/search/", methods = ["POST"])
+@app.route("/search/", methods = ["GET"])
 def search_handler():
     
-    if request.method == "POST":
-        strings = loads(request.data)
-        elems = {}
-        for news_url in strings:
-            entry = mongodb.entries.find_one({"url": news_url});
-            if entry is None:
-                comments = twitter_client.get_comments(news_url)
-                cmts = {}
-                for cmt in comments:
-                    numbers = paddle_client.extract_numbers(cmt[1])
-                    sent_val = paddle_client.rate(numbers)
-                    
-                    cmts[cmt] = sent_val
+    if request.method == "GET":
+        news_url = request.args.get('query')
+        entry = mongodb.entries.find_one({"url": news_url})
+        if entry is None:
+            comments = twitter_client.get_tweets(news_url)
+            mongodb.entries.insert_one({
+                "url": news_url,
+                "comments": comments,
+            })
+        else:
+            comments = entry['comments']
 
-                elems[news_url] = SentimentElement(news_url, cmts)
-                mongodb.entries.insert_one(elems[news_url].mongodb_entry)
-            else:
-                elems[news_url] = parse_mongodb_entry(entry)
-    
-        resp = SentimentResponse(elems)
-
-        return json_ok(resp.json_str)
+        return jsonify(comments)
     else:
         raise TypeError("Wrong Method")
 
@@ -74,7 +42,7 @@ def query_handler():
 
         resp = SentimentResponse(elems)
 
-        return json_ok(resp.json_str)
+        return jsonify(resp.json_str)
     else:
         raise TypeError("Wrong Method")
 
