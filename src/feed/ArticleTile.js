@@ -10,39 +10,92 @@ class ArticleTile extends Component {
     super(props);
     this.state = {
       showArticleModal: false,
+      showArticleModalAfter: false,
+      articleSizerHeight: 0,
+      rect: {
+        left: 0,
+        top: 0,
+        width: 0,
+      },
     };
   }
 
   articleClick() {
-    this.setState({
-      showArticleModal: true
-    });
-  }
+    if (!this.state.showArticleModal) {
+      let rect = this.articleWrapper.getBoundingClientRect();
 
-  onModalClose() {
-    this.setState({
-      showArticleModal: false
-    });
+      this.setState({
+        showArticleModal: true,
+        articleSizerHeight: rect.height,
+        rect,
+      });
+
+      requestAnimationFrame(() => {
+        this.setState({
+          showArticleModalAfter: true,
+        })
+      });
+    } else {
+      this.setState({
+        showArticleModal: false,
+        showArticleModalAfter: false,
+        articleSizerHeight: 0,
+        rect: {
+          left: 0,
+          top: 0,
+          width: 0,
+        },
+      });
+    }
   }
 
   render() {
-    const modalStyle = {}; // TODO pass className & style w/ css
     return (
-      <li className="articleTile" onClick={this.articleClick.bind(this)}>
-        <div className="articleTitle">{this.props.article.title}</div>
-        <div className="articleAuthor">Author Name</div>
-        <div className="articleSource">{this.props.article.source}</div>
-        <div className="articleChart">
-          <Chart data={this.props.article.sentiment}/>
-        </div>
-        <Modal
-          isOpen={this.state.showArticleModal}
-          onRequestClose={this.onModalClose.bind(this)}
-          style={modalStyle}
-          contentLabel="show article modal"
+      <li className={"articleTile " + (this.state.showArticleModalAfter ? "articleTile_modal" : "")}>
+        <div className="articleSizer" style={{
+          height: this.state.articleSizerHeight,
+        }} />
+        <div className="articleWrapper"
+             ref={(e) => { this.articleWrapper = e; }}
+             style={{
+               position: this.state.showArticleModal ? 'fixed' : 'static',
+               left: 0,
+               top: 0,
+               width: this.state.showArticleModal ? '100%' : 'auto',
+               height: this.state.showArticleModal ? '100%' : 'auto',
+             }}
+             onClick={this.articleClick.bind(this)}
         >
-          <ArticleInfo article={this.props.article}/>
-        </Modal>
+          <div className="articleItem"
+              style={{
+                position: this.state.showArticleModal ? 'absolute' : 'relative',
+                left: this.state.rect.left,
+                top: this.state.rect.top,
+                width: this.state.showArticleModal ? this.state.rect.width : 'auto',
+              }}
+          >
+            <div className="articleTop">
+              <div className="articleTitle">{this.props.article.title}</div>
+              <div className="articleAuthor">Author Name</div>
+              <div className="articleSource">{this.props.article.source}</div>
+              <div className="articleChart">
+                <Chart data={this.props.article.sentiment} ref={(e) => { this.articleChart = e; }} />
+              </div>
+            </div>
+            <div className="articleBottom">
+              <div className="comments">
+                <div className="comment">
+                  Most Positive Comment <br/>
+                  {this.props.article.most_pos}
+                </div>
+                <div className="comment">
+                  Most Negative Comment <br/>
+                  {this.props.article.most_neg}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </li>
     );
   };
