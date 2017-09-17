@@ -51,7 +51,7 @@ class PostStream {
   }
 
   loop() {
-    fetch('localhost:5000/query/clientId').then(res => {
+    fetch('localhost:5000/query/?fbid=' + this.profile.id).then(res => {
       const json = res.json();
       if (json.length > 0) {
         json.forEach(this.postCb);
@@ -63,7 +63,7 @@ class PostStream {
   }
 
   start() {
-    fetch('localhost:5000/search/profile/clientId').then(() => {
+    fetch('localhost:5000/profile/?fbid=' + this.profile.id).then(() => {
       this.loop();
     });
   }

@@ -84,6 +84,14 @@ class FacebookClient(object):
 
         return comments
 
+    def get_posts_and_comments(self, user_id):
+        with concurrent.futures.ThreadPoolExecutor(max_workers=200) as executor:
+            future_to_post_id = {
+                executor.submit(self.get_comments, user_id, post_id): post_id
+                for post_id in self.get_posts(user_id)
+            }
+            return concurrent.futures.as_completed(future_to_post_id)
+
 def main():
     c = FacebookClient()
 
