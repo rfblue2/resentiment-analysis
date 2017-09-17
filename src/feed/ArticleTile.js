@@ -28,7 +28,7 @@ class ArticleTile extends Component {
   render() {
     const modalStyle = {}; // TODO pass className & style w/ css
     return (
-      <li className="articleTile" onClick={this.articleClick}>
+      <li className="articleTile" onClick={this.articleClick.bind(this)}>
         <div className="articleTitle">{this.props.article.title}</div>
         <div className="articleAuthor">Author Name</div>
         <div className="articleSource">{this.props.article.source}</div>
