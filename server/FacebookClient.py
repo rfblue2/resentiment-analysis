@@ -61,7 +61,7 @@ class FacebookClient(object):
 
         return comments
 
-c = FacebookClient()
-for post_id in c.get_posts('4'):
-    print(post_id)
-    print(c.get_comments('4', post_id))
+# c = FacebookClient()
+# for post_id in c.get_posts('4'):
+#     print(post_id)
+#     print(c.get_comments('4', post_id))
