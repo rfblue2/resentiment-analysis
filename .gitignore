@@ -27,3 +27,9 @@ yarn-error.log*
 #*#
 
 server/__pycache__/
+
+# virtualenv
+.env
+
+# compiled files
+*.py[cod]
