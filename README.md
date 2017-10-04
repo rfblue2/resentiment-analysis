@@ -3,6 +3,10 @@
 ## Overview
 [Devpost](https://devpost.com/software/news-sentiment)
 
+![Screenshot](screenshot.png)
+
+(Screenshot generated using mock data)
+
 Virtually no one would disagree with the claim that our nation has become more ideologically divided in recent years, and the idea that this division has led to more inflammatory discourse on the internet is equally uncontroversial. What may be less apparent to many people is the way that public figures--journalists, politicians, celebrities--have become a target of increasingly rancorous speech, as well as the ways in which some demographics are more at risk of this kind of harassment than others. 
 
 With this project, we seek to make it trivially easy for an online activist to point out abusive behavior, especially when it manifests itself in a biased way. Using [Baidu's Paddle deep learning framework](https://github.com/PaddlePaddle), we trained a sentiment analyzer on [public Wikipedia datasets on personal attacks and aggression in online dialogue](https://figshare.com/projects/Wikipedia_Talk/16731). We then developed a webapp to allow users to infer the presence of strongly positive or negative language on the Facebook profiles of public figures. 

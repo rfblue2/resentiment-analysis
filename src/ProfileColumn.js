@@ -29,7 +29,7 @@ class ProfileColumn extends Component {
     names.then(ns => {
       var elems = [];
       console.log(elems);
-      for (var n in ns) {
+      for (let n in ns) {
         elems.push((<div className="personProfile" key={n} onClick={() => this.clickPerson(ns[n])}>
           <img className="personImg" src={ns[n]['img']} alt={n}/>
           <div className="personName">{ns[n]['name']}</div>

@@ -30,7 +30,7 @@
 }
 
 .articleTitle {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: 300;
 }
 
@@ -64,7 +64,7 @@
 
 .articleTop {
     position: relative;
-    padding-bottom: 30px;
+    padding-bottom: 50px;
 }
 
 .articleTile_modal .articleTop {

@@ -73,8 +73,7 @@ class ArticleTile extends Component {
               }}
           >
             <div className="articleTop">
-              <div className="articleTitle">{this.props.article.length}</div>
-              <div className="articleDate">Article Date</div>
+              <div className="articleTitle">{this.props.article.title.substring(0, 100)}...</div>
               <div className="articleChart">
                 <Chart data={this.props.article.sentiment} ref={(e) => { this.articleChart = e; }} />
               </div>
